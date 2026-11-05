@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<sdf version="1.11">
+  <model name="helmet">
+    <!-- Box body plus an undistorted photo plate. A textured sphere wrapped the
+         photo into an unreadable pattern, so the plate sits on the front. -->
+    <static>true</static>
+    <link name="link">
+      <collision name="collision">
+        <geometry><box><size>0.26 0.26 0.39</size></box></geometry>
+      </collision>
+
+      <visual name="body">
+        <geometry><box><size>0.26 0.26 0.39</size></box></geometry>
+        <material>
+          <ambient>0.75 0.60 0.06 1</ambient>
+          <diffuse>0.95 0.78 0.10 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+
+      <visual name="photo">
+        <pose>0.131 0 0 0 0 0</pose>
+        <geometry><box><size>0.002 0.26 0.39</size></box></geometry>
+        <material>
+          <pbr>
+            <metal>
+              <albedo_map>model://helmet/materials/textures/helmet_albedo.png</albedo_map>
+              <roughness>0.45</roughness>
+              <metalness>0.0</metalness>
+            </metal>
+          </pbr>
+          <ambient>1.0 1.0 1.0 1</ambient>
+          <diffuse>1.0 1.0 1.0 1</diffuse>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

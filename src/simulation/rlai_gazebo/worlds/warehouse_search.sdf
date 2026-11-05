@@ -1,0 +1,241 @@
+<?xml version="1.0"?>
+<!--
+  warehouse_search.sdf — 20 × 20 m shelf aisle layout for the search task.
+
+  Layout (top-down, Z-up):
+    - Perimeter: 4 walls, 0.2 m thick, 2.5 m high
+    - 4 shelf racks (3.0 × 0.8 × 2.0 m) forming a central cross:
+        shelf_north at ( 0,  3.0) rotated   0 deg
+        shelf_south at ( 0, -3.0) rotated   0 deg
+        shelf_west  at (-3.0,  0) rotated  90 deg
+        shelf_east  at ( 3.0,  0) rotated -90 deg
+    - Search props on the bottom shelf boards (board top at z = 0.39 m):
+        backpack       on shelf_north
+        bottle         on shelf_south
+        cardboard_box  on shelf_west
+        helmet         on shelf_east
+
+  Observation poses live in rlai_search/config/search_points.yaml and sit
+  1.4–1.6 m in front of each rack, facing the props.
+-->
+<sdf version="1.11">
+  <world name="warehouse_search">
+
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <plugin filename="gz-sim-physics-system"
+            name="gz::sim::systems::Physics"/>
+
+    <plugin filename="gz-sim-sensors-system"
+            name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <plugin filename="gz-sim-scene-broadcaster-system"
+            name="gz::sim::systems::SceneBroadcaster"/>
+
+    <plugin filename="gz-sim-user-commands-system"
+            name="gz::sim::systems::UserCommands"/>
+
+    <plugin filename="gz-sim-imu-system"
+            name="gz::sim::systems::Imu"/>
+
+    <light name="sun" type="directional">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.85 0.85 0.85 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Extra fill light so shelf interiors are not pitch black. -->
+    <light name="fill" type="directional">
+      <cast_shadows>false</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.45 0.45 0.45 1</diffuse>
+      <specular>0.0 0.0 0.0 1</specular>
+      <direction>0.5 -0.1 -0.9</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.70 0.70 0.70 1</ambient>
+            <diffuse>0.70 0.70 0.70 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="warehouse_floor">
+      <static>true</static>
+      <pose>0 0 0.001 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>20 20 0.001</size></box></geometry>
+          <material>
+            <ambient>0.58 0.58 0.62 1</ambient>
+            <diffuse>0.58 0.58 0.62 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ══════════════════════════ Perimeter walls ══════════════════════════ -->
+    <model name="wall_north">
+      <static>true</static>
+      <pose>0 10 1.25 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>20.4 0.2 2.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>20.4 0.2 2.5</size></box></geometry>
+          <material>
+            <ambient>0.72 0.72 0.74 1</ambient>
+            <diffuse>0.80 0.80 0.82 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="wall_south">
+      <static>true</static>
+      <pose>0 -10 1.25 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>20.4 0.2 2.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>20.4 0.2 2.5</size></box></geometry>
+          <material>
+            <ambient>0.72 0.72 0.74 1</ambient>
+            <diffuse>0.80 0.80 0.82 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="wall_east">
+      <static>true</static>
+      <pose>10 0 1.25 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.2 20.4 2.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.2 20.4 2.5</size></box></geometry>
+          <material>
+            <ambient>0.72 0.72 0.74 1</ambient>
+            <diffuse>0.80 0.80 0.82 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="wall_west">
+      <static>true</static>
+      <pose>-10 0 1.25 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>0.2 20.4 2.5</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>0.2 20.4 2.5</size></box></geometry>
+          <material>
+            <ambient>0.72 0.72 0.74 1</ambient>
+            <diffuse>0.80 0.80 0.82 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ═══════════════════════════ Shelf racks ═════════════════════════════ -->
+    <include>
+      <uri>model://warehouse_shelf</uri>
+      <name>shelf_north</name>
+      <pose>0 3.0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://warehouse_shelf</uri>
+      <name>shelf_south</name>
+      <pose>0 -3.0 0 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://warehouse_shelf</uri>
+      <name>shelf_west</name>
+      <pose>-3.0 0 0 0 0 1.5708</pose>
+    </include>
+
+    <include>
+      <uri>model://warehouse_shelf</uri>
+      <name>shelf_east</name>
+      <pose>3.0 0 0 0 0 -1.5708</pose>
+    </include>
+
+    <!-- ══════════════════════ Search target props ═════════════════════════ -->
+
+    <!-- Bottom shelf board top is z = 0.39 m; each prop is placed half its
+         height above the board so it rests visually on the plate. -->
+    <include>
+      <uri>model://backpack</uri>
+      <name>backpack_1</name>
+      <pose>0.6 3.0 0.615 0 0 -1.5708</pose>
+    </include>
+
+    <include>
+      <uri>model://bottle</uri>
+      <name>bottle_1</name>
+      <pose>-0.4 -3.0 0.50 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://cardboard_box</uri>
+      <name>cardboard_box_1</name>
+      <pose>-3.0 0.9 0.60 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://helmet</uri>
+      <name>helmet_1</name>
+      <pose>3.0 -0.9 0.585 0 0 3.1416</pose>
+    </include>
+
+    <!-- A few decoy props so the detector has to discriminate. -->
+    <include>
+      <uri>model://warehouse_pallet</uri>
+      <name>decoy_pallet</name>
+      <pose>-6.0 4.0 0 0 0 0.4</pose>
+    </include>
+
+    <include>
+      <uri>model://warehouse_box_cluster</uri>
+      <name>decoy_boxes</name>
+      <pose>6.0 -4.0 0 0 0 -0.3</pose>
+    </include>
+
+  </world>
+</sdf>

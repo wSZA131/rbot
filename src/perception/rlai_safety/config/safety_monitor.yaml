@@ -1,0 +1,8 @@
+# Parameters for rlai_safety/safety_monitor_node.
+safety_monitor:
+  ros__parameters:
+    use_sim_time: true
+    safety_distance: 0.35
+    half_angle_deg: 30.0
+    scan_topic: /scan
+    status_topic: /safety_status

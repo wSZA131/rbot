@@ -1,0 +1,17 @@
+# Parameters for rlai_object_detection/object_detector.
+# Set model_path to a YOLOE checkpoint, e.g. $HOME/models/yoloe-11s-seg.pt
+object_detector:
+  ros__parameters:
+    use_sim_time: true
+    model_path: ''
+    device: cuda:0
+    imgsz: 640
+    confidence: 0.35
+    max_rate_hz: 8.0
+    warmup: true
+    initial_label: ''
+    image_topic: /depth_camera/image_raw
+    target_topic: /search/target_label
+    detections_topic: /search/detections
+    debug_image_topic: /search/detections/image
+    publish_debug_image: true

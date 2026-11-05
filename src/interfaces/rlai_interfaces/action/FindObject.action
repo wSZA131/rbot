@@ -1,0 +1,22 @@
+# Search for an object described by text, e.g. "backpack".
+# The server drives the robot through the configured search points, runs the
+# open-vocabulary detector, and reports the map location of the target.
+
+# Goal
+string target_label
+float32 min_confidence 0.4
+int32 max_regions 0
+---
+# Result
+bool success
+geometry_msgs/PoseStamped location
+string region
+float32 confidence
+float32 elapsed_sec
+string message
+---
+# Feedback
+string state
+string current_region
+int32 regions_done
+int32 regions_total

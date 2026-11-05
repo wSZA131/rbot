@@ -1,0 +1,30 @@
+# Search regions visited by search_manager, in map coordinates.
+#
+# These poses match src/simulation/rlai_gazebo/worlds/warehouse_search.sdf,
+# where the map origin coincides with the Gazebo world origin (the saved
+# small_warehouse/warehouse_search map uses origin [-10, -10]).
+#
+# Each pose stands ~1.05 m in front of a rack and faces the props on the
+# bottom shelf board (top at z = 0.39 m).
+#
+# When you build your own map, re-pick these poses in RViz2 (Nav2 Goal tool)
+# and keep the same layout: one pose per rack, facing the shelf.
+frame_id: map
+
+regions:
+  - name: shelf_north
+    x: 0.6
+    y: 1.55
+    yaw: 1.5708        # face +y, backpack on the north rack
+  - name: shelf_south
+    x: -0.4
+    y: -1.55
+    yaw: -1.5708       # face -y, bottle on the south rack
+  - name: shelf_west
+    x: -1.55
+    y: 0.9
+    yaw: 3.1416        # face -x, cardboard box on the west rack
+  - name: shelf_east
+    x: 1.55
+    y: -0.9
+    yaw: 0.0           # face +x, helmet on the east rack
